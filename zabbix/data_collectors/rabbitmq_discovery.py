@@ -33,14 +33,14 @@ def _fail(msg):
 
 
 def main():
-    rc, raw_data, err = _run("rabbitmqctl list_vhosts -q")
+    rc, raw_data, err = _run("rabbitmqctl -q list_vhosts name")
     if rc != 0:
         _fail("rabbitmqctl command failed with %s "%err)
     vhosts = parse_vhosts(raw_data)
 
     raw_stats = []
     for vhost_name in vhosts:
-        rc, raw_data, err = _run("rabbitmqctl list_queues -p %s -q"%vhost_name)
+        rc, raw_data, err = _run("rabbitmqctl -q list_queues -p %s name"%vhost_name)
         if rc != 0:
           _fail("rabbitmqctl command failed with %s "%err)
         raw_stats = raw_stats + parse_stat(raw_data, vhost_name)
