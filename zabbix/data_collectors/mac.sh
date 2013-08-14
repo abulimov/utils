@@ -1,5 +1,7 @@
 #!/bin/bash
-#made by Alexander Bulimov
+# License: MIT
+# Author: Alexander Bulimov, lazywolf0@gmail.com
+
 if [ -z "$1" ]; then
     echo "no args specified, exiting!"
     exit 1 

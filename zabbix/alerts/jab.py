@@ -7,8 +7,6 @@ subj = list[1];
 body = list[2];
 type_ = list[3];
 
-#import string
-#print string.join(list)
 # Google Talk constants
 FROM_GMAIL_ID = "info@jabber.lan"
 GMAIL_PASS = "123456"

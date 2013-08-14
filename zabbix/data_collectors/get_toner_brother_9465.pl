@@ -1,4 +1,10 @@
 #! /usr/bin/perl
+#
+# This script is used to get
+# toner level from Brother MFC-9465CDN
+# 
+# License: MIT
+# Author: Alexander Bulimov, lazywolf0@gmail.com
 #====================================================================
 #
 #                   QUERY TONER LEVEL FROM Brother MFC-9465CDN
@@ -61,18 +67,14 @@ if($new == 1) {
         my $line;
         my $k;
         my $colorCount = 0;
-        for($i = 0; $i < $arraySize; $i++)
-        {
+        for($i = 0; $i < $arraySize; $i++) {
             $line = $l[ $i ];
-             if ($line =~ m/Toner (Yellow|Black|Magenta|Cyan) \((C|M|Y|K)\)\*\*/g)
-            {
-                        my $nextline = $l[ $i + 2 ] ;
+            if ($line =~ m/Toner (Yellow|Black|Magenta|Cyan) \((C|M|Y|K)\)\*\*/g) {
+                my $nextline = $l[ $i + 2 ] ;
                 $k = 0;
-                while ($nextline =~ m!((&#x25a0;){1})!g)
-                {
+                while ($nextline =~ m!((&#x25a0;){1})!g) {
                     $k++;
                 };
-                #print "$k \n";
                 $toner{$color[$colorCount]} = $k * 10;
                 $colorCount++;
             }
@@ -80,17 +82,15 @@ if($new == 1) {
         while ( my ($key, $value) = each(%toner) ) {
              print FH "$key,$value\n";
         }
-        } else {
-            # Error code, type of error, error message
-            if ($debug == 1){print("An error happened: $retcode ".$curl->strerror($retcode)." ".$curl->errbuf."\n");}
-        }
+    } else {
+        # Error code, type of error, error message
+        if ($debug == 1){print("An error happened: $retcode ".$curl->strerror($retcode)." ".$curl->errbuf."\n");}
+    }
 };
 #==================================
-if (exists  $toner{ $needle })
-{
+if (exists  $toner{ $needle }) {
     print $toner{$needle};
-}else
-{
+}else {
     print "0";
 };
 print "\n";
@@ -99,7 +99,7 @@ print "\n";
 #=== Close the session and exit the program ===
 if($new == 1) {
         close FH;
-}else {
+} else {
         close FR;
 }
 exit 0;

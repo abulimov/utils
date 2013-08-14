@@ -1,5 +1,11 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+#
+# This script is used to get a list of
+# RabbitMQ vhosts and queues in JSON
+# to provide Zabbix low-level discovery
+# License: MIT
+# Author: Alexander Bulimov, lazywolf0@gmail.com
 
 import subprocess
 import sys

@@ -1,4 +1,10 @@
 #! /usr/bin/perl
+#
+# This script is used to get a list of
+# mac addresses per port on 3com switches.
+# Tested on 3COM 4200G, 4210, 2916, 2924.
+# License: MIT
+# Author: Alexander Bulimov, lazywolf0@gmail.com
 #====================================================================
 #
 #                   QUERY MAC ADDRESSES FROM 3COM SWITCH FROM SELECTED PORT

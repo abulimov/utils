@@ -1,4 +1,10 @@
 #! /usr/bin/perl
+#
+# This script is used to get
+# toner level from Xerox 6015 MFP
+# 
+# License: MIT
+# Author: Alexander Bulimov, lazywolf0@gmail.com
 #====================================================================
 #
 #                   QUERY TONER LEVEL FROM XEROX 6015 MFP
@@ -16,16 +22,18 @@ my $new = 0;
 my %toner;
 my $needle = $ARGV[1];
 my $write_secs = (stat($file_name))[9];
+
 if ($debug == 1){
         print "file $file_name updated at ", scalar(localtime($write_secs)), "\n";
 };
+
 if (!(defined $write_secs) || ($write_secs + $interval < time)) {    #file updated less then $interval seconds ago
     if ($debug == 1){print "generating new toner table \n";}
     $new = 1;
     open FH, "+<$file_name" or open FH, ">$file_name" or die "can't open '$file_name': $!";
     flock(FH, 2) or die "can't flock $file_name: $!";
     seek(FH, 0, 0); truncate(FH, 0);
-}else {
+} else {
     if ($debug == 1){print "using old toner table \n";}
     open FR, "<$file_name" or die "can't open '$file_name': $!";
     flock(FR, 1) or die "can't flock $file_name: $!";
@@ -43,11 +51,12 @@ $color[0] = 'Cyan';
 $color[1] = 'Magenta';
 $color[2] = 'Yellow';
 $color[3] = 'Black';
+
 my $curl = WWW::Curl::Easy->new;
 my $response_body;
-#open(my $response, '+>', \$response_body) or die "can't open '$file_name': $!";
 my $site;
 $site = 'http://'.$ARGV[0].'/status/statsuppliesx.asp';
+
 if($new == 1) {
     $curl->setopt(CURLOPT_HEADER,1);
     $curl->setopt(CURLOPT_URL, $site);
@@ -57,8 +66,7 @@ if($new == 1) {
     if ($retcode == 0) {
         my $text = $response_body;
         my $i = 0;
-        while ($text =~ m!((\d)+)&#37;!g)
-        {
+        while ($text =~ m!((\d)+)&#37;!g) {
             $toner{$color[$i]} = $1;
             $i++;
         };
@@ -71,11 +79,9 @@ if($new == 1) {
         }
 };
 #==================================
-if (exists  $toner{ $needle })
-{
+if (exists  $toner{ $needle }) {
     print $toner{$needle};
-}else
-{
+} else {
     print "0";
 };
 print "\n";
@@ -84,7 +90,7 @@ print "\n";
 #=== Close the session and exit the program ===
 if($new == 1) {
         close FH;
-}else {
+} else {
         close FR;
 }
 exit 0;

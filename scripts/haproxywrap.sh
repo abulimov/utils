@@ -1,4 +1,5 @@
 # !/bin/bash
+#
 # This script is used to manage backends status in haproxy
 # general usage - starting or stoping maintenance
 # you need write permissions on haproxy socket

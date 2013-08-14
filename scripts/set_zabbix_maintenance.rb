@@ -1,4 +1,5 @@
 #!/usr/bin/ruby -W0
+#
 # This script is used to set/remove maintenance mode in zabbix
 # you need proper permissions for login_user set in zabbix server webui
 # you need gem zbxapi
