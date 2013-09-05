@@ -94,7 +94,7 @@ when "create"
     start_time = now.to_i
     name = "deploy #{now.to_s}"
     period = ARGV[2].to_i
-    if period.nil?
+    if period == 0
         period = 600 #10 * 60 seconds
     end
     group_id = get_group_id(zabbix,group_name)
