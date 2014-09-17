@@ -1,3 +1,12 @@
+#!/usr/bin/env python
+#
+# Control Zabbix Maintenance periods
+# ===
+#
+# Copyright 2014 Alexander Bulimov <lazywolf0@gmail.com>
+#
+# Released under the MIT license, see LICENSE for details.
+
 """Zabbix Maintenace.
 
 Usage:

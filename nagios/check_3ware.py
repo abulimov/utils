@@ -8,14 +8,13 @@
 # tw-cli requires root permissions.
 #
 # Create a file named /etc/sudoers.d/tw-cli with this line inside :
-# sensu ALL=(ALL) NOPASSWD: /usr/sbin/tw-cli
+# username ALL=(ALL) NOPASSWD: /usr/sbin/tw-cli
 #
 # You can get Debian/Ubuntu tw-cli packages here - http://hwraid.le-vert.net/
 #
 # Copyright 2014 Alexander Bulimov <lazywolf0@gmail.com>
 #
-# Released under the same terms as Sensu (the MIT license); see LICENSE
-# for details.
+# Released under the MIT license, see LICENSE for details.
 #
 # Inspired by 3ware_status utility
 

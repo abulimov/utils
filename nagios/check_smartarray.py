@@ -8,14 +8,13 @@
 # hpacucli requires root permissions.
 #
 # Create a file named /etc/sudoers.d/hpacucli with this line inside :
-# sensu ALL=(ALL) NOPASSWD: /usr/sbin/hpacucli
+# username ALL=(ALL) NOPASSWD: /usr/sbin/hpacucli
 #
 # You can get Debian/Ubuntu hpacucli packages here - http://hwraid.le-vert.net/
 #
 # Copyright 2014 Alexander Bulimov <lazywolf0@gmail.com>
 #
-# Released under the same terms as Sensu (the MIT license); see LICENSE
-# for details.
+# Released under the MIT license, see LICENSE for details.
 
 import subprocess
 import sys
