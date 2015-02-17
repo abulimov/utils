@@ -9,6 +9,7 @@ Under **nagios** folder you may find Nagios-compatible check scripts.
 Most notable checks are:
 
 * **check_docker_memory.py** - checks used/free memory in running docker container from parent host;
+* **check_cadvisor.py** - checks memory and cpu stats in running docker container from cAdvisor API;
 * **check_3ware.py** - checks health status of HDDs attached to 3ware raid controllers;
 * **check_smartarray.py** - checks health status of HDDs attached to smartarray raid controllers.
 
