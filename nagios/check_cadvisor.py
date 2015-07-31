@@ -21,16 +21,13 @@ import requests
 
 def get_host_data(cadvisor_url, host_name):
     """Get cAdvisor url, hostname, and return host data in JSON"""
-    response = requests.get(cadvisor_url + "/api/v1.2/containers/docker",
-                            timeout=10)
-    payload = json.loads(response.text)
-    for cont in payload["subcontainers"]:
-        host_raw_data = requests.get(cadvisor_url + "/api/v1.2/containers/" +
-                                     cont["name"],
-                                     timeout=5)
-        host_data = json.loads(host_raw_data.text)
-        if "aliases" in host_data and host_name in host_data["aliases"]:
-            return host_data
+    host_raw_data = requests.get(cadvisor_url + "/api/v1.2/docker/" +
+                                 host_name,
+                                 timeout=10)
+    host_data = json.loads(host_raw_data.text)
+    host_id = host_data.keys()[0]
+    return host_data[host_id]
+
 
 
 def get_host_procs(companion_url, host_id, sort_by):
