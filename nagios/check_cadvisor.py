@@ -110,7 +110,7 @@ def process_cpu_checks(machine_data, host_data,
         host_data["stats"][0]["cpu"]["usage"]["total"]
     cpu_num_cores = machine_data["num_cores"]
     cpu_usage_percent = cpu_usage_total_per_min / 60 / 10000000 / cpu_num_cores
-    perfdata = ' | cpu_usage=%5.2f%%;%d;%d;0;100' % \
+    perfdata = ' | cpu_usage=%.2f%%;%d;%d;0;100' % \
         (cpu_usage_percent, warn_level, crit_level)
     message = '%5.2f%% CPU used!' % cpu_usage_percent
     try:
