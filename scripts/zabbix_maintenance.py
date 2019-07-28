@@ -6,16 +6,16 @@
 # Copyright 2014 Alexander Bulimov <lazywolf0@gmail.com>
 #
 # Released under the MIT license, see LICENSE for details.
+#
+# Updated to be able to use with zabbix server version >=3.0 by Zhelanov Vladimir <zhelanov.va@gmail.com>
 
-"""Zabbix Maintenace.
+"""Zabbix Maintenance Handler.
 
 Usage:
   zabbix_maintenance.py -U=<user> [-P=<password] -S=<server> create \
-(<name>) (--hosts|--groups) <targets>...  [--period=<m>] [--no-data] [--force]
-  zabbix_maintenance.py -U=<user> [-P=<password] -S=<server> show \
-(<name> | --all)
-  zabbix_maintenance.py -U=<user> [-P=<password] -S=<server> remove \
-(<name> | --all)
+(<name>) (--hosts|--groups) <targets>...  [--period=<m>] [--description=<string>] [--no-data] [--force]
+  zabbix_maintenance.py -U=<user> [-P=<password] -S=<server> show (<name> | --all)
+  zabbix_maintenance.py -U=<user> [-P=<password] -S=<server> remove (<name> | --all)
   zabbix_maintenance.py (-h | --help)
   zabbix_maintenance.py --version
 
@@ -35,6 +35,7 @@ Options:
                              for example https://monitor.example.com
   --period=<m>               Period for maintenance window
                              in minutes [default: 10].
+  --description=<string>     Description for maintenance
 
 """
 import sys
@@ -117,12 +118,7 @@ def delete_maintenances(zbx, name):
 
 
 def check_maintenance(zbx, name):
-    result = zbx.maintenance.exists(
-        {
-            "name": name
-        }
-    )
-    return result
+    return True if len(zbx.maintenance.get({"output": "extend", "filter": { "name": name }})) > 0 else False
 
 
 def get_group_ids(zbx, host_groups):
@@ -178,7 +174,7 @@ def _ok(msg):
     print(msg)
 
 if __name__ == '__main__':
-    arguments = docopt(__doc__, version='Zabbix Maintenance 1.0')
+    arguments = docopt(__doc__, version='Zabbix Maintenance 1.1')
 
     server_url = arguments['--server']
     login_user = arguments['--user']
@@ -209,6 +205,8 @@ if __name__ == '__main__':
     else:
         maintenance_type = 0
 
+    description = arguments['--description'] if arguments.get('--description') else 'Created by zabbix_maintenance.py'
+
     if arguments['create']:
         now = datetime.datetime.now()
         start_time = time.mktime(now.timetuple())
@@ -230,7 +228,7 @@ if __name__ == '__main__':
                           hosts)
                 create_maintenance(zbx, group_ids, host_ids,
                                    start_time, maintenance_type,
-                                   period, name, 'desc')
+                                   period, name, description)
         except BaseException as e:
             _fail(e)
         _done('Done.')
